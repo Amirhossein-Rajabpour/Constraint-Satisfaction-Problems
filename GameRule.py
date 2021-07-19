@@ -132,18 +132,22 @@ def check_variables_domain_with_rule1(variables_domain, variable_index):
     new_domain = variables_domain[x][y]
 
     # check row
-    if row.count("0") + count_object_in_array(row, ["0"]) >= len(row) / 2 and "0" in new_domain:
+    # count_object_in_array(row, ["0"])
+    if row.count("0")  >= len(row) / 2 and "0" in new_domain:
         # np.delete(new_domain, np.where(new_domain == "0"))
         new_domain.remove("0")
-    if row.count("1") + count_object_in_array(row, ["1"]) >= len(row) / 2 and "1" in new_domain:
+    # + count_object_in_array(row, ["1"])
+    if row.count("1")  >= len(row) / 2 and "1" in new_domain:
         # np.delete(new_domain, np.where(new_domain == "1"))
         new_domain.remove("1")
 
     # check column
-    if row.count("0") + count_object_in_array(column, ["0"]) >= len(column) / 2 and "0" in new_domain:
+    # + count_object_in_array(column, ["0"])
+    if row.count("0")  >= len(column) / 2 and "0" in new_domain:
         # np.delete(new_domain, np.where(new_domain == "0"))
         new_domain.remove("0")
-    if row.count("1") + count_object_in_array(column, ["1"]) >= len(column) / 2 and "1" in new_domain:
+    # + count_object_in_array(column, ["1"])
+    if row.count("1")  >= len(column) / 2 and "1" in new_domain:
         # np.delete(new_domain, np.where(new_domain == "1"))
         new_domain.remove("1")
 
@@ -189,6 +193,7 @@ def check_variables_domains_with_rule_game(variables_domain, variable_index):
     # check rule 1
     new_domain = check_variables_domain_with_rule1(variables_domain_copy, variable_index)
     if len(new_domain) == 0:
+        print("injaa")
         return False, []
     variables_domain_copy[x][y] = new_domain
 

@@ -56,6 +56,10 @@ def CSP_Backtracking(node, const_prop_mode, csp_mode):
     else:
         if const_prop_mode == 'forward_checking':
             flag, variables_domain = Propagation.forward_checking(node.variables_domain)
+            print("!!!!!!!!!!!!!!!!!")
+            print(flag)
+            print(variables_domain)
+            print("!2222222222222222222")
         elif const_prop_mode == 'MAC':
             flag, variables_domain = Propagation.MAC(node)
 

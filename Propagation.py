@@ -9,14 +9,18 @@ def forward_checking(variables_domain):
     # variables_domain = node.variables_domain
     flag = True
     variables_domain_copy = copy.deepcopy(variables_domain)
+    print("ghable forwardddd")
+    print(variables_domain_copy)
+    print("-----------------------------")
 
     for i in range(len(variables_domain_copy)):
         for j in range(len(variables_domain_copy)):
             if variables_domain_copy[i][j] != "0" and variables_domain_copy[i][j] != "1":
                 variable_index = (i, j)
-                flag, new_variables_domain = check_variables_domains_with_rule_game(variables_domain_copy, variable_index)
+                flag, new_variables_domain = check_variables_domains_with_rule_game(variables_domain_copy,
+                                                                                    variable_index)
                 if flag:
-                    variables_domain = new_variables_domain
+                    variables_domain_copy = new_variables_domain
                 else:
                     break
 
@@ -25,7 +29,7 @@ def forward_checking(variables_domain):
 
     # when all variables domain aren't empty
     if flag:
-        return True, variables_domain
+        return True, variables_domain_copy
 
     # when at least one variable domain is empty
     else:
@@ -56,14 +60,14 @@ def add_neighbors_to_queue(variables_domain, changed_variable, queue):
         if is_changed_domain:
             queue.append((x - 1, y))
         if not new_variables_domain:
-            return False     # backtracking
+            return False  # backtracking
 
     if x <= len(variables_domain) - 2 and variables_domain[x + 1][y] != "0" and variables_domain[x + 1][y] != "1":
         is_changed_domain, new_variables_domain = is_change_domain(new_variables_domain, changed_variable)
         if is_changed_domain:
             queue.append((x + 1, y))
         if not new_variables_domain:
-            return False, False     # backtracking
+            return False, False  # backtracking
 
     if y >= 1 and variables_domain[x][y - 1] != "0" and variables_domain[x][y - 1] != "1":
         is_changed_domain, new_variables_domain = is_change_domain(new_variables_domain, changed_variable)
@@ -100,5 +104,3 @@ def MAC(node):
         return True, new_variables_domain
     else:
         return False, []
-
-
