@@ -1,7 +1,5 @@
 # they return new domains dictionary
 
-def forwardchecking(cell):
-    pass
-
-def MAC(cell):
-    pass
+def forward_checking(node):
+    board = node.board
+    variables_domain = node.variables_domain
