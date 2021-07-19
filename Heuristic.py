@@ -15,9 +15,14 @@ def find_minimum_domain(node):
 def assign_value(node):
     x, y = node.assigned_variable
     if len(node.variables_domain[x][y]) == 0:
-        return 'empty'
+        # it means it has no values left
+        return '-'
     else:
-        return node.variables_domain[x][y].pop()
+        new_value = node.variables_domain[x][y].pop()
+        if len(node.variables_domain[x][y]) == 0:
+            print(node.variables_domain[x][y])
+            node.variables_domain[x][y] = new_value
+        return new_value
 
 def MRV(node, mode):
 
@@ -32,9 +37,10 @@ def MRV(node, mode):
     node.assigned_value = assign_value(node)
     x, y = node.assigned_variable
     node.board[x][y] = node.assigned_value
+    print(node.board[x][y])
 
     # return changed node
-    if node.assigned_value != 'empty':
+    if node.assigned_value != '-':
         return True, node
     else:
-        return False, None
+        return False, node
