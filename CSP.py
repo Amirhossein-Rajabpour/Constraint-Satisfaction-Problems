@@ -1,9 +1,5 @@
 # TODO takes MRV mode
 
-# TODO recursively do constraint propagation. then domains change
-
-# TODO then we do heuristic step (choose a variable)
-
 # TODO choose which element of variables domain? for example choose 0 first (then 0 should be removed from variabls domain)
 
 import Heuristic
