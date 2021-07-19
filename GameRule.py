@@ -57,14 +57,14 @@ def are_unique_strings_in_board(node):
 
     # take out all created strings in rows
     for row in board:
-        if np.count_nonzero(row == "-") == 0:
+        if row.count('-') == 0:
             created_string = created_string_with_char(row)
             created_string_in_rows.append(created_string)
 
     # take out all created strings in columns
     for i in range(len(board)):
         column = board[:, i]
-        if np.count_nonzero(column == "-") == 0:
+        if column.count('-') == 0:
             created_string = created_string_with_char(column)
             created_string_in_columns.append(created_string)
 
@@ -132,16 +132,20 @@ def check_variables_domain_with_rule1(variables_domain, variable_index):
     new_domain = variables_domain[x, y]
 
     # check row
-    if np.count_nonzero(row == "0") + count_object_in_array(row, ["0"]) >= len(row) / 2:
-        np.delete(new_domain, np.where(new_domain == "0"))
-    if np.count_nonzero(row == "1") + count_object_in_array(row, ["1"]) >= len(row) / 2:
-        np.delete(new_domain, np.where(new_domain == "1"))
+    if row.ount("0") + count_object_in_array(row, ["0"]) >= len(row) / 2 and "0" in new_domain:
+        # np.delete(new_domain, np.where(new_domain == "0"))
+        new_domain.remove("0")
+    if row.count("1") + count_object_in_array(row, ["1"]) >= len(row) / 2 and "1" in new_domain:
+        # np.delete(new_domain, np.where(new_domain == "1"))
+        new_domain.remove("1")
 
     # check column
-    if np.count_nonzero(column == "0") + count_object_in_array(column, ["0"]) >= len(column) / 2:
-        np.delete(new_domain, np.where(new_domain == "0"))
-    if np.count_nonzero(column == "1") + count_object_in_array(column, ["1"]) >= len(column) / 2:
-        np.delete(new_domain, np.where(new_domain == "1"))
+    if np.count_nonzero(column == "0") + count_object_in_array(column, ["0"]) >= len(column) / 2 and "0" in new_domain:
+        # np.delete(new_domain, np.where(new_domain == "0"))
+        new_domain.remove("0")
+    if np.count_nonzero(column == "1") + count_object_in_array(column, ["1"]) >= len(column) / 2 and "1" in new_domain:
+        # np.delete(new_domain, np.where(new_domain == "1"))
+        new_domain.remove("1")
 
     return new_domain
 
