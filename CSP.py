@@ -9,7 +9,7 @@ def find_path(node):
     return path
 
 def print_board(board):
-    for i in range(board):
+    for i in board:
         print(i)
     print('*******************************************')
 
