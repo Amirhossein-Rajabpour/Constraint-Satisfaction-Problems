@@ -1,8 +1,7 @@
 from GameRule import *
 
 
-# they return new domains dictionary
-
+# return new domains arr with forward checking
 def forward_checking(node):
     board = node.board
     variables_domain = node.variables_domain
@@ -29,3 +28,8 @@ def forward_checking(node):
     else:
         return False, []
 
+
+# return new domains arr with Maintaining Arc Consistency (MAC)
+def MAC(node):
+    board = node.board
+    variables_domain = node.variable_domains
