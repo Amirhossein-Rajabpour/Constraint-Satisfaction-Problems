@@ -15,5 +15,5 @@ if __name__ == "__main__":
     file_name = './puzzles/puzzle0.txt'
     board = take_board(file_name)
 
-    const_prop_mode = 'forward_checking'
+    const_prop_mode = "forward_checking"
     CSP.start_CSP(board, const_prop_mode)

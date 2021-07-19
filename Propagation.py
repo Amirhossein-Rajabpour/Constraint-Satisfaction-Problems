@@ -48,6 +48,7 @@ def is_change_domain(variables_domain, variable_index):
 # when variables assigned, neighbors add to queue for check domains
 def add_neighbors_to_queue(variables_domain, changed_variable, queue):
     x, y = changed_variable[0], changed_variable[1]
+    new_variables_domain = []
 
     if x >= 1 and variables_domain[x - 1][y] != "0" and variables_domain[x - 1][y] != "1":
         is_changed_domain, new_variables_domain = is_change_domain(variables_domain, changed_variable)
@@ -83,7 +84,7 @@ def add_neighbors_to_queue(variables_domain, changed_variable, queue):
 # return new domains arr with Maintaining Arc Consistency (MAC)
 def MAC(node):
     board = node.board
-    variables_domain = node.variable_domains
+    variables_domain = node.variables_domain
     assigned_variable = node.assigned_variable
     queue = [assigned_variable]
 

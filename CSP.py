@@ -49,7 +49,7 @@ def CSP_Backtracking(node, const_prop_mode):
 
             if state:
                 # continue solving the puzzle
-                child_node = Node.Node(node.board, node, variables_domains, '', '')
+                child_node = Node.Node(node.board, node, variable_domains, '', '')
                 CSP_Backtracking(child_node, const_prop_mode)
             else:
                 # new values for assigned_variable should be considered
