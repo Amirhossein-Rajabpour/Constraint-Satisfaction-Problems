@@ -15,6 +15,7 @@ def print_board(node):
         print(i)
     print('*******************************************')
 
+
 def create_domains_list(initial_board):
     domains_list = copy.deepcopy(initial_board)
     dimension = len(domains_list)
@@ -36,33 +37,35 @@ def start_CSP(input_board, const_prop_mode):
 
     domains_list = create_domains_list(input_board)
     initial_node = Node.Node(input_board, '', domains_list, '', '')  # initial node does not have parent
-    CSP_Backtracking(initial_node, const_prop_mode)
+    CSP_Backtracking(initial_node, const_prop_mode, 'start')
 
 
-def CSP_Backtracking(node, const_prop_mode):
+def CSP_Backtracking(node, const_prop_mode, csp_mode):
 
-    is_finished = GameRule.check_all_rule_game(node)
-    if is_finished:
-        print('finish')
-        print_board(node)
+    # is_finished = GameRule.check_all_rule_game(node)
+    # if is_finished:
+    #     print('finish')
+    #     print_board(node)
+    # else:
+
+    not_empty, node = Heuristic.MRV(node, csp_mode)
+    print_board(node)
+    if not not_empty:
+        # here we should go to parent node
+        CSP_Backtracking(node.parent, const_prop_mode)
     else:
-        not_empty, node = Heuristic.MRV(node)
-        print_board(node)
-        if not not_empty:
-            # here we should go to parent node
-            CSP_Backtracking(node.parent, const_prop_mode)
-        else:
-            if const_prop_mode == 'forward_checking':
-                print(node.variables_domain)
-                state, variables_domain = Propagation.forward_checking(node)
-            elif const_prop_mode == 'MAC':
-                state, variables_domain = Propagation.MAC(node)
+        if const_prop_mode == 'forward_checking':
+            print('domains: ', node.variables_domain)
+            state, variables_domain = Propagation.forward_checking(node)
+        elif const_prop_mode == 'MAC':
+            state, variables_domain = Propagation.MAC(node)
 
-            if state:
-                # continue solving the puzzle
-                child_node = Node.Node(node.board, node, variables_domain, '', '')
-                CSP_Backtracking(child_node, const_prop_mode)
-            else:
-                # new values for assigned_variable should be considered
-                print('backtracking')
-                CSP_Backtracking(node, const_prop_mode)
+        if state:
+            # continue solving the puzzle
+            print('continue')
+            child_node = Node.Node(node.board, node, variables_domain, '', '')
+            CSP_Backtracking(child_node, const_prop_mode, 'continue')
+        else:
+            # new values for assigned_variable should be considered
+            print('backtracking')
+            CSP_Backtracking(node, const_prop_mode, 'samevar')
