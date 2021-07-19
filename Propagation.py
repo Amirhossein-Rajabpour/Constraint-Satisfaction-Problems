@@ -29,7 +29,33 @@ def forward_checking(node):
         return False, []
 
 
+# when variables assigned, neighbors add to queue for check domains
+def add_neighbors_to_queue(variables_domain, changed_variable, queue):
+    x, y = changed_variable[0], changed_variable[1]
+
+    if x >= 1 and variables_domain[x - 1][y] != "0" and variables_domain[x - 1][y] != "1":
+        queue.append((x-1, y))
+    if x <= len(variables_domain) - 2 and variables_domain[x + 1][y] != "0" and variables_domain[x + 1][y] != "1":
+        queue.append((x+1, y))
+    if y >= 1 and variables_domain[x][y - 1] != "0" and variables_domain[x][y - 1] != "1":
+        queue.append((x, y-1))
+    if y <= len(variables_domain) - 2 and variables_domain[x][y + 1] != "0" and variables_domain[x][y + 1] != "1":
+        queue.append((x, y+1))
+
+
 # return new domains arr with Maintaining Arc Consistency (MAC)
 def MAC(node):
+
     board = node.board
     variables_domain = node.variable_domains
+    assigned_variable = node.assigned_variable
+    queue = [assigned_variable]
+
+    while len(queue) > 0:
+        changed_variable = queue.pop(0)
+        add_neighbors_to_queue(variables_domain, changed_variable, queue)
+
+
+
+
+
