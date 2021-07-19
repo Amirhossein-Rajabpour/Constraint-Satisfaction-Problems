@@ -12,7 +12,7 @@ def take_board(filename):
 
 
 if __name__ == "__main__":
-    file_name = './puzzles/puzzle0.txt'
+    file_name = './puzzles/puzzle2.txt'
     board = take_board(file_name)
 
     const_prop_mode = "forward_checking"

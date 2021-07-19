@@ -6,7 +6,6 @@ def find_minimum_domain(node):
         for j in range(dimension):
             if node.board[i][j] == '-' and len(node.variables_domain[i][j]) <= minimum:
                 minimum_index = (i, j)
-    print(minimum_index)
     return minimum_index
 
 
@@ -19,7 +18,7 @@ def assign_value(node):
         return '-'
     else:
         new_value = node.variables_domain[x][y].pop()
-        print(node.variables_domain[x][y])
+        # print(node.variables_domain[x][y])
         # node.variables_domain[x][y] = new_value
         return new_value
 
@@ -40,7 +39,6 @@ def MRV(node, mode):
         node.variables_domain[x][y] = ["1"]
     else:
         node.variables_domain[x][y] == ["0"]
-    print(node.board[x][y])
 
     # return changed node
     if node.assigned_value != '-':

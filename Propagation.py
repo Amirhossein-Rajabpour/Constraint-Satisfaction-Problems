@@ -17,7 +17,6 @@ def forward_checking(variables_domain):
         for j in range(len(variables_domain_copy)):
             if variables_domain_copy[i][j] != "0" and variables_domain_copy[i][j] != "1":
                 variable_index = (i, j)
-                print(variable_index)
                 flag, new_variables_domain = check_variables_domains_with_rule_game(variables_domain_copy,
                                                                                     variable_index)
                 if flag:
