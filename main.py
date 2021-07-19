@@ -1,5 +1,4 @@
-import numpy as np
-import CSP
+# import CSP
 
 def take_board(file):
 
@@ -8,14 +7,14 @@ def take_board(file):
     board = []
     for row in puzzle:
         board.append(row.replace('1\n', '1').replace('0\n', '0').replace('-\n', '-').split(' '))
-    board = np.array(board)
-    return board, dimension
+    return board
 
 if __name__ == '__main__':
 
     file_name = 'puzzles/puzzle0.txt'
     f = open(file_name, "r")
-    board, dimension = take_board(f)
+    board = take_board(f)
+    print(board)
 
     const_prop_mode = 'forwardchecking'
-    CSP.start_CSP(board, dimension, const_prop_mode)
+    # CSP.start_CSP(board, const_prop_mode)

@@ -1,17 +1,13 @@
-# TODO takes MRV mode
-
-# TODO choose which element of variables domain? for example choose 0 first (then 0 should be removed from variabls domain)
-
 import Heuristic
 import Propagation
 import Node
 import copy
 
-assignment = []
 
 def find_path(node):
     path = ''
     return path
+
 
 def create_domains_list(initial_board):
     domains_list = copy.deepcopy(initial_board)
@@ -34,8 +30,8 @@ def start_CSP(input_board, const_prop_mode):
 
     domains_list = create_domains_list(input_board)
     initial_node = Node.Node(input_board, '', domains_list, '', '')  # initial node does not have parent
-    # assignment.append(initial_node)
     CSP_Backtracking(initial_node, const_prop_mode)
+
 
 def CSP_Backtracking(node, const_prop_mode):
 
@@ -43,13 +39,20 @@ def CSP_Backtracking(node, const_prop_mode):
         not_empty, node = Heuristic.MRV(node)
         if not not_empty:
             # here we should go to parent node
-            pass
+            CSP_Backtracking(node.parent, const_prop_mode)
         else:
             if const_prop_mode == 'forwardchecking':
-                state, domains_list = Propagation.forward_checking(node)
+                state, variable_domains = Propagation.forward_checking(node)
             elif const_prop_mode == 'MAC':
-                state, domains_list = Propagation.MAC(node)
+                state, variable_domains = Propagation.MAC(node)
 
+        if state:
+            # continue solving the puzzle
+            child_node = Node.Node(node.board, node, variable_domains, '', '')
+            CSP_Backtracking(child_node, const_prop_mode)
+        else:
+            # new values for assigned_variable should be considered
+            CSP_Backtracking(node, const_prop_mode)
 
 
         # if not is_end(assignment[-1]):
