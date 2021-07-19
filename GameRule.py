@@ -18,16 +18,14 @@ def is_equal_numbers_of_digit_in_board(node):
 
     # check rows
     for row in board:
-        if row.count('-') == 0:
-            if row.count("0") != row.count("1"):
-                return False
+        if row.count("0") != row.count("1") or row.count('-') >= 1:
+            return False
 
     # check columns
     for i in range(len(board)):
         column = board[:][i]
-        if column.count('-') == 0:
-            if column.count("0") != column.count("1"):
-                return False
+        if column.count("0") != column.count("1") or column.count('-') >= 1:
+            return False
 
     return True
 
@@ -57,16 +55,14 @@ def are_unique_strings_in_board(node):
 
     # take out all created strings in rows
     for row in board:
-        if row.count('-') == 0:
-            created_string = created_string_with_char(row)
-            created_string_in_rows.append(created_string)
+        created_string = created_string_with_char(row)
+        created_string_in_rows.append(created_string)
 
     # take out all created strings in columns
     for i in range(len(board)):
         column = board[:][i]
-        if column.count('-') == 0:
-            created_string = created_string_with_char(column)
-            created_string_in_columns.append(created_string)
+        created_string = created_string_with_char(column)
+        created_string_in_columns.append(created_string)
 
     # check strings are in each rows and columns is unique
     if check_unique_strings(created_string_in_rows) and check_unique_strings(created_string_in_columns):
@@ -104,8 +100,13 @@ def check_duplicate_digit_in_board(node):
 
 
 def check_all_rule_game(node):
+
+
     if is_equal_numbers_of_digit_in_board(node) and are_unique_strings_in_board(
             node) and check_duplicate_digit_in_board(node):
+        print(is_equal_numbers_of_digit_in_board(node))
+        print(are_unique_strings_in_board(node))
+        print(check_duplicate_digit_in_board(node))
         return True
     else:
         return False
@@ -133,25 +134,28 @@ def check_variables_domain_with_rule1(variables_domain, variable_index):
 
     # check row
     # count_object_in_array(row, ["0"])
-    if row.count("0")  >= len(row) / 2 and "0" in new_domain:
+    if row.count("0") > len(row)/2 or row.count("1") > len(row)/2 or column.count("0") > len(column)/2 or column.count("1") > len(column)/2:
+        return False, False
+
+    if row.count("0") == len(row) / 2 and "0" in new_domain:
         # np.delete(new_domain, np.where(new_domain == "0"))
         new_domain.remove("0")
     # + count_object_in_array(row, ["1"])
-    if row.count("1")  >= len(row) / 2 and "1" in new_domain:
+    if row.count("1")  == len(row) / 2 and "1" in new_domain:
         # np.delete(new_domain, np.where(new_domain == "1"))
         new_domain.remove("1")
 
     # check column
     # + count_object_in_array(column, ["0"])
-    if row.count("0")  >= len(column) / 2 and "0" in new_domain:
+    if row.count("0")  == len(column) / 2 and "0" in new_domain:
         # np.delete(new_domain, np.where(new_domain == "0"))
         new_domain.remove("0")
     # + count_object_in_array(column, ["1"])
-    if row.count("1")  >= len(column) / 2 and "1" in new_domain:
+    if row.count("1")  == len(column) / 2 and "1" in new_domain:
         # np.delete(new_domain, np.where(new_domain == "1"))
         new_domain.remove("1")
 
-    return new_domain
+    return True, new_domain
 
 
 # get variable_index and check duplicate digit rule
@@ -190,16 +194,18 @@ def check_variables_domains_with_rule_game(variables_domain, variable_index):
     variables_domain_copy = copy.deepcopy(variables_domain)
     x, y = variable_index[0], variable_index[1]
 
+
     # check rule 1
-    new_domain = check_variables_domain_with_rule1(variables_domain_copy, variable_index)
-    if len(new_domain) == 0:
-        print("injaa")
+    flag, new_domain = check_variables_domain_with_rule1(variables_domain_copy, variable_index)
+    if not flag:
+        print("rule 1 bega rft")
         return False, []
     variables_domain_copy[x][y] = new_domain
 
     # check rule 3
     new_domain = check_variables_domain_with_rule3(variables_domain_copy, variable_index)
     if len(new_domain) == 0:
+        print("rule 2 bega rft")
         return False, []
     variables_domain_copy[x][y] = new_domain
 

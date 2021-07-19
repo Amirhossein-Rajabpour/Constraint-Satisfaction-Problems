@@ -42,11 +42,11 @@ def start_CSP(input_board, const_prop_mode):
 
 def CSP_Backtracking(node, const_prop_mode, csp_mode):
 
-    # is_finished = GameRule.check_all_rule_game(node)
-    # if is_finished:
-    #     print('finish')
-    #     print_board(node)
-    # else:
+    is_finished = GameRule.check_all_rule_game(node)
+    if is_finished:
+        print('finish')
+        print_board(node)
+        return
 
     not_empty, node = Heuristic.MRV(node, csp_mode)
     print_board(node)
@@ -55,11 +55,9 @@ def CSP_Backtracking(node, const_prop_mode, csp_mode):
         CSP_Backtracking(node.parent, const_prop_mode, 'continue')
     else:
         if const_prop_mode == 'forward_checking':
-            flag, variables_domain = Propagation.forward_checking(node.variables_domain)
-            print("!!!!!!!!!!!!!!!!!")
-            print(flag)
-            print(variables_domain)
-            print("!2222222222222222222")
+            variables_domain_copy = copy.deepcopy(node.variables_domain)
+            variables_domain_copy[node.assigned_variable[0]][node.assigned_variable[1]] = node.assigned_value
+            flag, variables_domain = Propagation.forward_checking(variables_domain_copy)
         elif const_prop_mode == 'MAC':
             flag, variables_domain = Propagation.MAC(node)
 
