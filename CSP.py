@@ -41,7 +41,8 @@ def CSP_Backtracking(node, const_prop_mode):
             # here we should go to parent node
             CSP_Backtracking(node.parent, const_prop_mode)
         else:
-            if const_prop_mode == 'forwardchecking':
+            if const_prop_mode == 'forward_checking':
+                print(node.variable_domains)
                 state, variable_domains = Propagation.forward_checking(node)
             elif const_prop_mode == 'MAC':
                 state, variable_domains = Propagation.MAC(node)
