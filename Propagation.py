@@ -29,23 +29,57 @@ def forward_checking(node):
         return False, []
 
 
+def is_change_domain(variables_domain, variable_index):
+    x, y = variable_index[0], variable_index[1]
+    prev_variable_domain = variables_domain[x][y]
+    flag, new_variables_domain = check_variables_domains_with_rule_game(variables_domain, variable_index)
+    if flag:
+        new_variable_domain = new_variables_domain[x][y]
+        if new_variable_domain != prev_variable_domain:  # when variable domain changed => added to queue
+            return True, new_variables_domain
+        else:
+            return False, new_variables_domain  # variable domain isn't changed => not added to queue
+    else:
+        return False, []
+
+
 # when variables assigned, neighbors add to queue for check domains
 def add_neighbors_to_queue(variables_domain, changed_variable, queue):
     x, y = changed_variable[0], changed_variable[1]
 
     if x >= 1 and variables_domain[x - 1][y] != "0" and variables_domain[x - 1][y] != "1":
-        queue.append((x-1, y))
+        is_changed_domain, new_variables_domain = is_change_domain(variables_domain, changed_variable)
+        if is_changed_domain:
+            queue.append((x - 1, y))
+        if not new_variables_domain:
+            return False     # backtracking
+
     if x <= len(variables_domain) - 2 and variables_domain[x + 1][y] != "0" and variables_domain[x + 1][y] != "1":
-        queue.append((x+1, y))
+        is_changed_domain, new_variables_domain = is_change_domain(new_variables_domain, changed_variable)
+        if is_changed_domain:
+            queue.append((x + 1, y))
+        if not new_variables_domain:
+            return False, False     # backtracking
+
     if y >= 1 and variables_domain[x][y - 1] != "0" and variables_domain[x][y - 1] != "1":
-        queue.append((x, y-1))
+        is_changed_domain, new_variables_domain = is_change_domain(new_variables_domain, changed_variable)
+        if is_changed_domain:
+            queue.append((x, y - 1))
+        if not new_variables_domain:
+            return False, False
+
     if y <= len(variables_domain) - 2 and variables_domain[x][y + 1] != "0" and variables_domain[x][y + 1] != "1":
-        queue.append((x, y+1))
+        is_changed_domain, new_variables_domain = is_change_domain(new_variables_domain, changed_variable)
+        if is_changed_domain:
+            queue.append((x, y + 1))
+        if not new_variables_domain:
+            return False, False
+
+    return
 
 
 # return new domains arr with Maintaining Arc Consistency (MAC)
 def MAC(node):
-
     board = node.board
     variables_domain = node.variable_domains
     assigned_variable = node.assigned_variable
@@ -54,8 +88,3 @@ def MAC(node):
     while len(queue) > 0:
         changed_variable = queue.pop(0)
         add_neighbors_to_queue(variables_domain, changed_variable, queue)
-
-
-
-
-
