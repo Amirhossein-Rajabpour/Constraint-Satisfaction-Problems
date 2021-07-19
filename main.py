@@ -1,5 +1,6 @@
 import numpy as np
 import CSP
+
 def take_board(file):
 
     dimension = f.readline()[0]

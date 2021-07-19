@@ -98,3 +98,12 @@ def check_duplicate_digit_in_board(node):
     return True
 
 
+
+def check_all_rule_game(node):
+    if is_equal_numbers_of_digit_in_board(node) and are_unique_strings_in_board(node) and check_duplicate_digit_in_board(node):
+        return True
+    else:
+        return False
+
+
+if __name__ == "__main__":
