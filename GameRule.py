@@ -119,6 +119,10 @@ def count_object_in_array(arr, object):
     return counter
 
 
+def chek_new_domain_length(new_domain):
+    pass
+
+
 def check_variables_domain_with_rule1(variables_domain, variable_index):
     x, y = variable_index[0], variable_index[1]
 
@@ -141,14 +145,53 @@ def check_variables_domain_with_rule1(variables_domain, variable_index):
     return new_domain
 
 
+# get variable_index and check duplicate digit rule
+def check_variables_domain_duplicate_digit(row_or_column, variable_index, domain):
+    new_domain = domain
+    k = variable_index
+
+    if k >= 2 and row_or_column[k - 1] == row_or_column[k - 2] and (
+            row_or_column[k - 1] == "0" or row_or_column[k - 1] == "1"):
+        np.delete(new_domain, np.where(new_domain == row_or_column[k - 1]))
+    if k <= len(row_or_column) - 3 and row_or_column[k + 1] == row_or_column[k + 2] and (
+            row_or_column[k + 1] == "0" or row_or_column[k + 1] == "1"):
+        np.delete(new_domain, np.where(new_domain == row_or_column[k - 1]))
+
+    return new_domain
+
+
+def check_variables_domain_with_rule3(variables_domain, variable_index):
+    x, y = variable_index[0], variable_index[1]
+    domain = variables_domain[x, y]
+
+    # check in row
+    row = variables_domain[x, :]
+    new_domain = check_variables_domain_duplicate_digit(row, y, domain)
+
+    # check in column
+    column = variables_domain[:, y]
+    new_domain = check_variables_domain_duplicate_digit(column, x, new_domain)
+
+    return new_domain
+
+
 def check_variables_domains_with_rule_game(variables_domain, variable_index):
     variables_domain_copy = copy.deepcopy(variables_domain)
     x, y = variable_index[0], variable_index[1]
 
-    # check rule1
+    # check rule 1
     new_domain = check_variables_domain_with_rule1(variables_domain_copy, variable_index)
     if len(new_domain) == 0:
-        return False
+        return False, []
+    variables_domain_copy[x, y] = new_domain
+
+    # check rule 3
+    new_domain = check_variables_domain_with_rule3(variables_domain_copy, variable_index)
+    if len(new_domain) == 0:
+        return False, []
+    variables_domain_copy[x, y] = new_domain
+
+    return True, variables_domain_copy
 
 
 if __name__ == "__main__":
