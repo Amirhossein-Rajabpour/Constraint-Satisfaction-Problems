@@ -8,6 +8,7 @@
 
 import Heuristic
 import Propagation
+import Node
 
 def is_end(node):
     pass
@@ -18,10 +19,9 @@ def find_path(node):
 
 assignment = []
 # it takes raw input and create basic structures for the program
-def start_CSP(input_puzzle, const_prop_mode):
-    # TODO create initial node
+def start_CSP(input_board, const_prop_mode):
     # TODO create domains dict
-    initial_node = ''
+    initial_node = Node(input_board, None)  # initial node does not have parent
     domains_dict = {}
     assignment.append(initial_node)
     CSP_Backtracking(domains_dict, const_prop_mode)
