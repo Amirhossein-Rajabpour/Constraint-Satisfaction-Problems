@@ -8,6 +8,11 @@ def find_path(node):
     path = ''
     return path
 
+def print_board(node):
+    print(f'value {node.assigned_value} assigned to index {node.assigned_variable}\n')
+    for i in node.board:
+        print(i)
+    print('*******************************************')
 
 def create_domains_list(initial_board):
     domains_list = copy.deepcopy(initial_board)
@@ -37,6 +42,7 @@ def CSP_Backtracking(node, const_prop_mode):
 
     while True:
         not_empty, node = Heuristic.MRV(node)
+        print_board(node)
         if not not_empty:
             # here we should go to parent node
             CSP_Backtracking(node.parent, const_prop_mode)
@@ -49,8 +55,9 @@ def CSP_Backtracking(node, const_prop_mode):
 
             if state:
                 # continue solving the puzzle
-                child_node = Node.Node(node.board, node, variable_domains, '', '')
+                child_node = Node.Node(node.board, node, variables_domain, '', '')
                 CSP_Backtracking(child_node, const_prop_mode)
             else:
                 # new values for assigned_variable should be considered
+                print('backtracking')
                 CSP_Backtracking(node, const_prop_mode)
