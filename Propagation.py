@@ -5,11 +5,13 @@ from GameRule import *
 def forward_checking(node):
     board = node.board
     variables_domain = node.variables_domain
+    print(board)
+    print(variables_domain)
     flag = True
 
     for i in range(len(board)):
         for j in range(len(board[0])):
-            if variables_domain[i, j] != "0" and variables_domain[i, j] != "1":
+            if variables_domain[i][j] != "0" and variables_domain[i][j] != "1":
                 variable_index = (i, j)
                 flag, new_variables_domain = check_variables_domains_with_rule_game(variables_domain, variable_index)
                 if flag:

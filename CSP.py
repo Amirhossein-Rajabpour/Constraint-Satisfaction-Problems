@@ -42,14 +42,14 @@ def CSP_Backtracking(node, const_prop_mode):
             CSP_Backtracking(node.parent, const_prop_mode)
         else:
             if const_prop_mode == 'forward_checking':
-                print(node.variable_domains)
+                print(node.variables_domain)
                 state, variable_domains = Propagation.forward_checking(node)
             elif const_prop_mode == 'MAC':
                 state, variable_domains = Propagation.MAC(node)
 
             if state:
                 # continue solving the puzzle
-                child_node = Node.Node(node.board, node, variable_domains, '', '')
+                child_node = Node.Node(node.board, node, variables_domains, '', '')
                 CSP_Backtracking(child_node, const_prop_mode)
             else:
                 # new values for assigned_variable should be considered

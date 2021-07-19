@@ -13,9 +13,9 @@ def find_minimum_domain(node):
 # it returns 0 first and then 1 if zero were removed from domain
 def assign_value(node):
     x, y = node.assigned_variable
-    if '0' in node.variable_domains[x][y]:
+    if '0' in node.variables_domain[x][y]:
         return '0'
-    elif '1' in node.variable_domains[x][y]:
+    elif '1' in node.variables_domain[x][y]:
         return '1'
     else:
         'empty'
