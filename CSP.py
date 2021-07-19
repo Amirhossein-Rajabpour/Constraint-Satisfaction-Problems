@@ -8,8 +8,9 @@ def find_path(node):
     path = ''
     return path
 
-def print_board(board):
-    for i in board:
+def print_board(node):
+    print(f'value {node.assigned_value} assigned to index {node.assigned_variable}\n')
+    for i in node.board:
         print(i)
     print('*******************************************')
 
@@ -41,13 +42,12 @@ def CSP_Backtracking(node, const_prop_mode):
 
     while True:
         not_empty, node = Heuristic.MRV(node)
-        print_board(node.board)
+        print_board(node)
         if not not_empty:
             # here we should go to parent node
             CSP_Backtracking(node.parent, const_prop_mode)
         else:
             if const_prop_mode == 'forward_checking':
-                print(node.variables_domain)
                 state, variables_domain = Propagation.forward_checking(node)
             elif const_prop_mode == 'MAC':
                 state, variables_domain = Propagation.MAC(node)
@@ -58,4 +58,5 @@ def CSP_Backtracking(node, const_prop_mode):
                 CSP_Backtracking(child_node, const_prop_mode)
             else:
                 # new values for assigned_variable should be considered
+                print('backtracking')
                 CSP_Backtracking(node, const_prop_mode)
