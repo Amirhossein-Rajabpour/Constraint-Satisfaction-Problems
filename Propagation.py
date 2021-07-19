@@ -4,7 +4,7 @@ from GameRule import *
 # return new domains arr with forward checking
 def forward_checking(node):
     board = node.board
-    variables_domain = node.variables_domain
+    variables_domain = node.variable_domains
     flag = True
 
     for i in range(len(board)):
