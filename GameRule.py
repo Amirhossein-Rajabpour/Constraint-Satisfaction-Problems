@@ -24,7 +24,7 @@ def is_equal_numbers_of_digit_in_board(node):
 
     # check columns
     for i in range(len(board)):
-        column = board[:, i]
+        column = board[:][i]
         if column.count('-') == 0:
             if column.count("0") != column.count("1"):
                 return False
@@ -63,7 +63,7 @@ def are_unique_strings_in_board(node):
 
     # take out all created strings in columns
     for i in range(len(board)):
-        column = board[:, i]
+        column = board[:][i]
         if column.count('-') == 0:
             created_string = created_string_with_char(column)
             created_string_in_columns.append(created_string)
@@ -96,7 +96,7 @@ def check_duplicate_digit_in_board(node):
 
     # check columns
     for i in range(len(board)):
-        column = board[:, i]
+        column = board[:][i]
         if not check_duplicate_digit(column):
             return False
 
