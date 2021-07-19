@@ -7,8 +7,8 @@ def calculate_number_of_digit(row_or_column, digit):
     return count_digit
 
 
-# check numbers of digit in each row and column
-def is_equal_numbers_of_digit(node):
+# check numbers of digit in each row and column (first rule)
+def is_equal_numbers_of_digit_in_board(node):
     board = node.board
 
     # check rows
@@ -45,7 +45,7 @@ def check_unique_strings(strings_arr_in_rows_or_columns):
         return False
 
 
-# check all created strings in rows and columns, are unique or not
+# check all created strings in rows and columns, are unique or not  (second rule)
 def are_unique_strings_in_board(node):
     board = node.board
     created_string_in_rows, created_string_in_columns = [], []
@@ -68,3 +68,33 @@ def are_unique_strings_in_board(node):
         return True
     else:
         return False
+
+
+# check duplicate digit in row or column
+def check_duplicate_digit(row_or_column):
+    if len(row_or_column) >= 3:
+        for i in range(0, len(row_or_column) - 2):
+            if row_or_column[i] == row_or_column[i + 1] == row_or_column[i + 2] and row_or_column[i] != "-":
+                return False
+
+    return True
+
+
+# check duplicate digit in rows and columns in board
+def check_duplicate_digit_in_board(node):
+    board = node.board
+
+    # check rows
+    for row in board:
+        if not check_duplicate_digit(row):
+            return False
+
+    # check columns
+    for i in range(len(board)):
+        column = board[:, i]
+        if not check_duplicate_digit(column):
+            return False
+
+    return True
+
+
