@@ -1,19 +1,20 @@
+import copy
+
 from GameRule import *
 
 
 # return new domains arr with forward checking
-def forward_checking(node):
-    board = node.board
-    variables_domain = node.variables_domain
-    print(board)
-    print(variables_domain)
+def forward_checking(variables_domain):
+    # board = node.board
+    # variables_domain = node.variables_domain
     flag = True
+    variables_domain_copy = copy.deepcopy(variables_domain)
 
-    for i in range(len(board)):
-        for j in range(len(board[0])):
-            if variables_domain[i][j] != "0" and variables_domain[i][j] != "1":
+    for i in range(len(variables_domain_copy)):
+        for j in range(len(variables_domain_copy)):
+            if variables_domain_copy[i][j] != "0" and variables_domain_copy[i][j] != "1":
                 variable_index = (i, j)
-                flag, new_variables_domain = check_variables_domains_with_rule_game(variables_domain, variable_index)
+                flag, new_variables_domain = check_variables_domains_with_rule_game(variables_domain_copy, variable_index)
                 if flag:
                     variables_domain = new_variables_domain
                 else:
