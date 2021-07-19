@@ -14,12 +14,10 @@ def find_minimum_domain(node):
 # it returns 0 first and then 1 if zero were removed from domain
 def assign_value(node):
     x, y = node.assigned_variable
-    if '0' in node.variables_domain[x][y]:
-        return '0'
-    elif '1' in node.variables_domain[x][y]:
-        return '1'
+    if len(node.variables_domain[x][y]) == 0:
+        return 'empty'
     else:
-        'empty'
+        return node.variables_domain[x][y].pop()
 
 def MRV(node):
     # return variable with the smallest domain
@@ -27,6 +25,8 @@ def MRV(node):
 
     # assign a value to this variable
     node.assigned_value = assign_value(node)
+    x, y = node.assigned_variable
+    node.board[x][y] = node.assigned_value
 
     # return changed node
     if node.assigned_value != 'empty':

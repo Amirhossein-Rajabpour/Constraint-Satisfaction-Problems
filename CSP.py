@@ -2,6 +2,7 @@ import Heuristic
 import Propagation
 import Node
 import copy
+import GameRule
 
 
 def find_path(node):
@@ -40,7 +41,11 @@ def start_CSP(input_board, const_prop_mode):
 
 def CSP_Backtracking(node, const_prop_mode):
 
-    while True:
+    is_finished = GameRule.check_all_rule_game(node)
+    if is_finished:
+        print('finish')
+        print_board(node)
+    else:
         not_empty, node = Heuristic.MRV(node)
         print_board(node)
         if not not_empty:
@@ -49,9 +54,9 @@ def CSP_Backtracking(node, const_prop_mode):
         else:
             if const_prop_mode == 'forward_checking':
                 print(node.variables_domain)
-                state, variable_domains = Propagation.forward_checking(node)
+                state, variables_domain = Propagation.forward_checking(node)
             elif const_prop_mode == 'MAC':
-                state, variable_domains = Propagation.MAC(node)
+                state, variables_domain = Propagation.MAC(node)
 
             if state:
                 # continue solving the puzzle
