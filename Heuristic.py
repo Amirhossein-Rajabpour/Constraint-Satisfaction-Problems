@@ -5,7 +5,7 @@ def find_minimum_domain(node):
     dimension = len(node.board)
     for i in range(dimension):
         for j in range(dimension):
-            if node.board[i][j] == '-' and len(node.variable_domains[i][j]) <= minimum:
+            if node.board[i][j] == '-' and len(node.variables_domain[i][j]) <= minimum:
                 minimum_index = (i,j)
     return minimum_index
 
