@@ -1,8 +1,16 @@
+# TODO takes MRV mode
+
+# TODO choose which element of variables domain? for example choose 0 first (then 0 should be removed from variabls domain)
+
 import Heuristic
 import Propagation
 import Node
 import copy
 
+assignment = []
+
+def is_end(node):
+    pass
 
 def find_path(node):
     path = ''
@@ -37,7 +45,6 @@ def CSP_Backtracking(node, const_prop_mode):
 
     while True:
         not_empty, node = Heuristic.MRV(node)
-        print(node.board)
         if not not_empty:
             # here we should go to parent node
             CSP_Backtracking(node.parent, const_prop_mode)
@@ -47,13 +54,13 @@ def CSP_Backtracking(node, const_prop_mode):
             elif const_prop_mode == 'MAC':
                 state, variable_domains = Propagation.MAC(node)
 
-            if state:
-                # continue solving the puzzle
-                child_node = Node.Node(node.board, node, variable_domains, '', '')
-                CSP_Backtracking(child_node, const_prop_mode)
-            else:
-                # new values for assigned_variable should be considered
-                CSP_Backtracking(node, const_prop_mode)
+        if state:
+            # continue solving the puzzle
+            child_node = Node.Node(node.board, node, variable_domains, '', '')
+            CSP_Backtracking(child_node, const_prop_mode)
+        else:
+            # new values for assigned_variable should be considered
+            CSP_Backtracking(node, const_prop_mode)
 
 
         # if not is_end(assignment[-1]):
