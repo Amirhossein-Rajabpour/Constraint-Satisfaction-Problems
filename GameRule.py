@@ -1,3 +1,5 @@
+import copy
+
 import numpy as np
 from Main import *
 from Node import *
@@ -105,6 +107,47 @@ def check_all_rule_game(node):
             node) and check_duplicate_digit_in_board(node):
         return True
     else:
+        return False
+
+
+def count_object_in_array(arr, object):
+    counter = 0
+    for i in range(len(arr)):
+        if arr[i] == object:
+            counter += 1
+
+    return counter
+
+
+def check_variables_domain_with_rule1(variables_domain, variable_index):
+    x, y = variable_index[0], variable_index[1]
+
+    row = variables_domain[x, :]
+    column = variables_domain[:, y]
+    new_domain = variables_domain[x, y]
+
+    # check row
+    if np.count_nonzero(row == "0") + count_object_in_array(row, ["0"]) >= len(row) / 2:
+        np.delete(new_domain, np.where(new_domain == "0"))
+    if np.count_nonzero(row == "1") + count_object_in_array(row, ["1"]) >= len(row) / 2:
+        np.delete(new_domain, np.where(new_domain == "1"))
+
+    # check column
+    if np.count_nonzero(column == "0") + count_object_in_array(column, ["0"]) >= len(column) / 2:
+        np.delete(new_domain, np.where(new_domain == "0"))
+    if np.count_nonzero(column == "1") + count_object_in_array(column, ["1"]) >= len(column) / 2:
+        np.delete(new_domain, np.where(new_domain == "1"))
+
+    return new_domain
+
+
+def check_variables_domains_with_rule_game(variables_domain, variable_index):
+    variables_domain_copy = copy.deepcopy(variables_domain)
+    x, y = variable_index[0], variable_index[1]
+
+    # check rule1
+    new_domain = check_variables_domain_with_rule1(variables_domain_copy, variable_index)
+    if len(new_domain) == 0:
         return False
 
 
