@@ -7,6 +7,7 @@ def find_minimum_domain(node):
         for j in range(dimension):
             if node.board[i][j] == '-' and len(node.variables_domain[i][j]) <= minimum:
                 minimum_index = (i,j)
+    print(minimum_index)
     return minimum_index
 
 # assigns a value to the selected variable and delete that value from variable's domain

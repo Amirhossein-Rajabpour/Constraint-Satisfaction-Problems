@@ -87,7 +87,17 @@ def MAC(node):
     variables_domain = node.variables_domain
     assigned_variable = node.assigned_variable
     queue = [assigned_variable]
+    flag = True
 
     while len(queue) > 0:
         changed_variable = queue.pop(0)
-        add_neighbors_to_queue(variables_domain, changed_variable, queue)
+        flag, new_variables_domain = add_neighbors_to_queue(variables_domain, changed_variable, queue)
+        if not flag:
+            break
+
+    if flag:
+        return True, new_variables_domain
+    else:
+        return False, []
+
+
