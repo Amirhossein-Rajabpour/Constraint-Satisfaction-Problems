@@ -8,6 +8,10 @@ def find_path(node):
     path = ''
     return path
 
+def print_board(board):
+    for i in range(board):
+        print(i)
+    print('*******************************************')
 
 def create_domains_list(initial_board):
     domains_list = copy.deepcopy(initial_board)
@@ -37,6 +41,7 @@ def CSP_Backtracking(node, const_prop_mode):
 
     while True:
         not_empty, node = Heuristic.MRV(node)
+        print_board(node.board)
         if not not_empty:
             # here we should go to parent node
             CSP_Backtracking(node.parent, const_prop_mode)
