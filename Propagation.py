@@ -75,7 +75,7 @@ def add_neighbors_to_queue(variables_domain, changed_variable, queue):
         if not new_variables_domain:
             return False, False
 
-    return
+    return True, new_variables_domain
 
 
 # return new domains arr with Maintaining Arc Consistency (MAC)

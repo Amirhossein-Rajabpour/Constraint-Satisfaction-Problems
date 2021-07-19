@@ -7,7 +7,8 @@ from Node import *
 
 # calculate number of digit in row or column
 def calculate_number_of_digit(row_or_column, digit):
-    count_digit = np.count_nonzero(row_or_column == digit)
+    # count_digit = np.count_nonzero(row_or_column == digit)
+    count_digit = row_or_column.count(digit)
     return count_digit
 
 
@@ -17,15 +18,15 @@ def is_equal_numbers_of_digit_in_board(node):
 
     # check rows
     for row in board:
-        if np.count_nonzero(row == "-") == 0:
-            if calculate_number_of_digit(row, "0") != calculate_number_of_digit(row, "1"):
+        if row.count('-') == 0:
+            if row.count("0") != row.count("1"):
                 return False
 
     # check columns
     for i in range(len(board)):
         column = board[:, i]
-        if np.count_nonzero(column == "-") == 0:
-            if calculate_number_of_digit(column, "0") != calculate_number_of_digit(column, "1"):
+        if column.count('-') == 0:
+            if column.count("0") != column.count("1"):
                 return False
 
     return True
