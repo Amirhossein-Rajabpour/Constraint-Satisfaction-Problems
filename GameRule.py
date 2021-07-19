@@ -201,10 +201,10 @@ def check_variables_domains_with_rule_game(variables_domain, variable_index):
     return True, variables_domain_copy
 
 
-if __name__ == "__main__":
-    board = np.array([["1", "1", "0", "0"],
-                      ["0", "1", "1", "0"],
-                      ["1", "0", "0", "1"],
-                      ["0", "0", "1", "1"]])
-    node = Node(board, "", "")
-    print(check_all_rule_game(node))
+# if __name__ == "__main__":
+#     board = np.array([["1", "1", "0", "0"],
+#                       ["0", "1", "1", "0"],
+#                       ["1", "0", "0", "1"],
+#                       ["0", "0", "1", "1"]])
+#     node = Node(board, "", "")
+#     print(check_all_rule_game(node))

@@ -10,6 +10,7 @@ def find_path(node):
     return path
 
 def print_board(node):
+    print(node.variables_domain)
     print(f'value {node.assigned_value} assigned to index {node.assigned_variable}\n')
     for i in node.board:
         print(i)
@@ -56,7 +57,11 @@ def CSP_Backtracking(node, const_prop_mode, csp_mode):
     else:
         if const_prop_mode == 'forward_checking':
             print('domains: ', node.variables_domain)
-            state, variables_domain = Propagation.forward_checking(node)
+            state, variables_domain = Propagation.forward_checking(node.variables_domain)
+            print("arminnnn")
+            print(state)
+            print(variables_domain)
+            print("!!!!!!!!!!!!!!!!!!!!!!")
         elif const_prop_mode == 'MAC':
             state, variables_domain = Propagation.MAC(node)
 
