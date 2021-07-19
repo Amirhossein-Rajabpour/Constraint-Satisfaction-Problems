@@ -1,4 +1,3 @@
-import Node
 
 def find_minimum_domain(node):
     minimum = 2
@@ -22,7 +21,7 @@ def assign_value(node):
         'empty'
 
 def MRV(node):
-    # return variable with the least domain
+    # return variable with the smallest domain
     node.assigned_variable = find_minimum_domain(node)
 
     # assign a value to this variable
