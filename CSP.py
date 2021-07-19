@@ -1,13 +1,13 @@
 # TODO takes MRV mode
 
-# TODO recursively do constraint propagation. then domains change
-
-# TODO then we do heuristic step (choose a variable)
-
 # TODO choose which element of variables domain? for example choose 0 first (then 0 should be removed from variabls domain)
 
 import Heuristic
 import Propagation
+import Node
+import math
+
+assignment = []
 
 def is_end(node):
     pass
@@ -16,13 +16,24 @@ def find_path(node):
     path = ''
     return path
 
-assignment = []
-# it takes raw input and create basic structures for the program
-def start_CSP(input_puzzle, const_prop_mode):
-    # TODO create initial node
-    # TODO create domains dict
-    initial_node = ''
+def create_domains_dict(initial_board, dimension):
     domains_dict = {}
+    dimension = int(dimension)
+    for i in range(1, (dimension**2)+1):
+        x = math.ceil(i/dimension) - 1
+        y = (i % dimension) - 1
+        if initial_board[x][y] == '1' or initial_board[x][y] == '0':
+            domains_dict[i] = []
+        else:
+            domains_dict[i] = ['0', '1']
+    return domains_dict
+
+
+# it takes raw input and create basic structures for the program
+def start_CSP(input_board, dimension, const_prop_mode):
+    # TODO create domains dict
+    initial_node = Node.Node(input_board, '')  # initial node does not have parent
+    domains_dict = create_domains_dict(input_board, dimension)
     assignment.append(initial_node)
     CSP_Backtracking(domains_dict, const_prop_mode)
 
