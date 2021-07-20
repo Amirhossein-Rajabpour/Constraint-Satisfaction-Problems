@@ -1,3 +1,6 @@
+import copy
+
+
 def find_minimum_domain(node):
     minimum = 2
     minimum_index = ()
@@ -37,8 +40,11 @@ def MRV(node, mode):
     node.board[x][y] = node.assigned_value
     if node.assigned_value == "0":
         node.variables_domain[x][y] = ["1"]
-    else:
+    elif node.assigned_value == "1":
         node.variables_domain[x][y] == ["0"]
+    else:
+        print('backtracking')
+        node.variables_domain[x][y] == []
 
     # return changed node
     if node.assigned_value != '-':
