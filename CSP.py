@@ -3,11 +3,10 @@ import Propagation
 import Node
 import copy
 import GameRule
+import sys
 
+sys.setrecursionlimit(10 ** 6)
 
-def find_path(node):
-    path = ''
-    return path
 
 def print_board(node):
     print(f'value {node.assigned_value} assigned to index {node.assigned_variable}\n')
@@ -48,24 +47,34 @@ def CSP_Backtracking(node, const_prop_mode, csp_mode):
         print_board(node)
         return
 
+    print('before MRV')
+    for i in node.board:
+        print(i)
     not_empty, node = Heuristic.MRV(node, csp_mode)
     print_board(node)
     if not not_empty:
         # here we should go to parent node
+        print('back to parent')
         CSP_Backtracking(node.parent, const_prop_mode, 'continue')
     else:
         if const_prop_mode == 'forward_checking':
             variables_domain_copy = copy.deepcopy(node.variables_domain)
             variables_domain_copy[node.assigned_variable[0]][node.assigned_variable[1]] = node.assigned_value
             flag, variables_domain = Propagation.forward_checking(variables_domain_copy)
+            print('after FC: ', node.variables_domain)
         elif const_prop_mode == 'MAC':
             flag, variables_domain = Propagation.MAC(node)
 
         if flag:
             # continue solving the puzzle
             print('continue')
-            child_node = Node.Node(node.board, node, variables_domain, '', '')
+            board_copy = copy.deepcopy(node.board)
+            child_node = Node.Node(board_copy, node, variables_domain, '', '')
             CSP_Backtracking(child_node, const_prop_mode, 'continue')
+        elif not flag and len(node.variables_domain[node.assigned_variable[0]][node.assigned_variable[1]]) == 0:
+            # backtracking
+            print('domain is empty. we should backtrack')
+            CSP_Backtracking(node.parent, const_prop_mode, 'backtracking')
         else:
             # new values for assigned_variable should be considered
             print('change last variable value')
