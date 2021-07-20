@@ -168,10 +168,7 @@ def check_variables_domain_with_rule1(variables_domain, variable_index):
     # + count_object_in_array(row, ["1"])
     if row.count("1") == len(row) / 2 and "1" in new_domain:
         # np.delete(new_domain, np.where(new_domain == "1"))
-        print("{} {} in check variables domain with rule 1".format(x, y))
-        print(new_domain)
         new_domain.remove("1")
-        print(new_domain)
 
     # check column
     # + count_object_in_array(column, ["0"])
@@ -193,12 +190,12 @@ def check_variables_domain_duplicate_digit(row_or_column, variable_index, domain
 
     if k >= 2 and row_or_column[k - 1] == row_or_column[k - 2] and (
             row_or_column[k - 1] == "0" or row_or_column[k - 1] == "1") and row_or_column[k - 1] in new_domain:
-        print("remove {} in {}".format(row_or_column[k - 1], k))
+        # print("remove {} in {}".format(row_or_column[k - 1], k))
         new_domain.remove(row_or_column[k - 1])
         # np.delete(new_domain, np.where(new_domain == row_or_column[k - 1]))
     if k <= len(row_or_column) - 3 and row_or_column[k + 1] == row_or_column[k + 2] and (
             row_or_column[k + 1] == "0" or row_or_column[k + 1] == "1") and row_or_column[k + 1] in new_domain:
-        print("remove {} in {}".format(row_or_column[k + 1], k))
+        # print("remove {} in {}".format(row_or_column[k + 1], k))
         new_domain.remove(row_or_column[k + 1])
         # np.delete(new_domain, np.where(new_domain == row_or_column[k - 1]))
 
@@ -208,7 +205,7 @@ def check_variables_domain_duplicate_digit(row_or_column, variable_index, domain
 def check_variables_domain_with_rule3(variables_domain, variable_index):
     x, y = variable_index[0], variable_index[1]
     domain = variables_domain[x][y]
-    print("first domain ", domain)
+    # print("first domain ", domain)
 
     # check in row
     row = variables_domain[x]
@@ -226,30 +223,30 @@ def check_variables_domains_with_rule_game(variables_domain, variable_index):
     x, y = variable_index
 
     # check rule 1
-    print("before check rule 1 ", variables_domain_copy[x][y])
+    # print("before check rule 1 ", variables_domain_copy[x][y])
     flag, new_domain = check_variables_domain_with_rule1(variables_domain_copy, variable_index)
-    print("after check rule 1 ", new_domain)
+    # print("after check rule 1 ", new_domain)
     if not flag:
-        print("rule 1 bega rft")
+        print("!!! Breaking the rule 1 !!!")
         return False, []
     variables_domain_copy[x][y] = new_domain
 
     # check rule 2
     flag = check_unique_string_in_board(variables_domain_copy)
     if not flag:
-        print("rule 2 bega rft")
+        print("!!! Breaking the rule 2 !!!")
         return False, []
 
     # check rule 3
-    print("before rule3")
-    for row in variables_domain_copy:
-        print(row)
-    print(variable_index)
-    print(variables_domain_copy[x][y])
+    # print("before rule3")
+    # for row in variables_domain_copy:
+    #     print(row)
+    # print(variable_index)
+    # print(variables_domain_copy[x][y])
     new_domain = check_variables_domain_with_rule3(variables_domain_copy, variable_index)
-    print(new_domain)
+    # print(new_domain)
     if len(new_domain) == 0:
-        print("rule 3 bega rft")
+        print("!!! Breaking the rule 3 !!!")
         return False, []
     variables_domain_copy[x][y] = new_domain
 

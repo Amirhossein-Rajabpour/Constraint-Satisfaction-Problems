@@ -2,9 +2,9 @@ import copy
 
 
 def find_minimum_domain(node):
-    print("node variables ")
-    for row in node.variables_domain:
-        print(row)
+    # print("node variables ")
+    # for row in node.variables_domain:
+    #     print(row)
     minimum = 2
     minimum_index = ()
     dimension = len(node.board)
@@ -13,14 +13,13 @@ def find_minimum_domain(node):
             if node.board[i][j] == '-' and len(node.variables_domain[i][j]) <= minimum:
                 minimum = len(node.variables_domain[i][j])
                 minimum_index = (i, j)
-    print("MRV => index ", minimum_index)
+    # print("MRV => index ", minimum_index)
     return minimum_index
 
 
 # assigns a value to the selected variable and delete that value from variable's domain
 # it returns 0 first and then 1 if zero were removed from domain
 def assign_value(node):
-    print(node.assigned_variable)
     x, y = node.assigned_variable
     if len(node.variables_domain[x][y]) == 0:
         # it means it has no values left

@@ -40,12 +40,12 @@ def start_CSP(input_board, const_prop_mode):
 def CSP_Backtracking(node, const_prop_mode, csp_mode):
     is_finished = GameRule.check_all_rule_game(node)
     if is_finished:
-        print('******** solved puzzle ********')
+        print('\n\n*************************** SOLVED PUZZLE *************************\n')
         print_board(node.board)
         return
 
-    print('new step: *********************************')
-    print('before MRV')
+    print("**********************************************************")
+    print('***** Before MRV *****')
     print_board(node.board)
 
     not_empty = Heuristic.MRV(node, csp_mode)
@@ -55,41 +55,42 @@ def CSP_Backtracking(node, const_prop_mode, csp_mode):
         print('back to parent')
         CSP_Backtracking(node.parent, const_prop_mode, 'continue')
     else:
-        print("after MRV")
+        print("***** After MRV *****")
         new_variables_domain = copy.deepcopy(node.variables_domain)
         x, y = node.assigned_variable
         new_variables_domain[x][y] = node.assigned_value
         new_board = copy.deepcopy(node.board)
         new_board[x][y] = node.assigned_value
-        print("variable {} = {}".format(node.assigned_variable, node.assigned_value))
+        print("(MRV) => assigned variable {} = {}".format(node.assigned_variable, node.assigned_value))
         print_board(new_board)
+        print("**********************************************************")
 
         if const_prop_mode == 'forward_checking':
-            print('var domains node ghable forward:\n')
-            for i in new_variables_domain:
-                print(i)
+            # print('var domains node ghable forward:\n')
+            # for i in new_variables_domain:
+            #     print(i)
             flag, variables_domain = Propagation.forward_checking(new_variables_domain)
-            print("var domains node after forward: \n")
-            for i in variables_domain:
-                print(i)
+            # print("var domains node after forward: \n")
+            # for i in variables_domain:
+            #     print(i)
             # print('after FC: ', node.variables_domain)
         elif const_prop_mode == 'MAC':
             flag, variables_domain = Propagation.MAC(node)
 
         if flag:
             # continue solving the puzzle
-            print('continue')
-
+            print('***** Continue solving puzzle *****')
             child_node = Node.Node(new_board, node, variables_domain, '', '')
             CSP_Backtracking(child_node, const_prop_mode, 'continue')
+
         elif not flag and len(node.variables_domain[x][y]) == 0:
             # backtracking
-            print('domain is empty. we should backtrack')
-            print("node parent variables")
-            print(node.parent.variables_domain)
+            print('!!! Domain is empty ====> BACKTRACKING')
+            # print("node parent variables")
+            # print(node.parent.variables_domain)
             CSP_Backtracking(node.parent, const_prop_mode, 'backtracking')
 
         else:
             # new values for assigned_variable should be considered
-            print('change last variable value')
+            print(" ==> Change last assigned variable value <== ")
             CSP_Backtracking(node, const_prop_mode, 'samevar')
