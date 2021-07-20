@@ -1,5 +1,4 @@
 import copy
-
 import numpy as np
 from Main import *
 from Node import *
@@ -216,20 +215,20 @@ def check_variables_domains_with_rule_game(variables_domain, variable_index):
     # check rule 1
     flag, new_domain = check_variables_domain_with_rule1(variables_domain_copy, variable_index)
     if not flag:
-        print("rule 1 bega rft")
+        print("rule 1 conflicted")
         return False, []
     variables_domain_copy[x][y] = new_domain
 
     # check rule 2
     flag = check_unique_string_in_board(variables_domain_copy)
     if not flag:
-        print("rule 2 bega rft")
+        print("rule 2 conflicted")
         return False, []
 
     # check rule 3
     new_domain = check_variables_domain_with_rule3(variables_domain_copy, variable_index)
     if len(new_domain) == 0:
-        print("rule 2 bega rft")
+        print("rule 2 conflicted")
         return False, []
     variables_domain_copy[x][y] = new_domain
 
