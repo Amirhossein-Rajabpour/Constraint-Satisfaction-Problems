@@ -2,9 +2,6 @@ import copy
 
 
 def find_minimum_domain(node):
-    # print("node variables ")
-    # for row in node.variables_domain:
-    #     print(row)
     minimum = 2
     minimum_index = ()
     dimension = len(node.board)
@@ -38,6 +35,8 @@ def MRV(node, mode):
     else:
         # return variable with the smallest domain
         node.assigned_variable = find_minimum_domain(node)
+        if not node.assigned_variable:      # when backtrack and node parent variables is empty
+            return False
 
     # assign a value to this variable
     node.assigned_value = assign_value(node)

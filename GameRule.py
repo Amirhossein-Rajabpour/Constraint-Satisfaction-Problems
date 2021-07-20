@@ -43,6 +43,9 @@ def created_string_with_char(char_arr):
 def check_unique_strings(strings_arr_in_rows_or_columns):
     unique, counts = np.unique(strings_arr_in_rows_or_columns, return_counts=True)
     if np.count_nonzero(counts == 1) == len(strings_arr_in_rows_or_columns):
+        # print(strings_arr_in_rows_or_columns)
+        # print("counts")
+        # print(counts)
         return True
     else:
         return False
@@ -193,6 +196,10 @@ def check_variables_domain_duplicate_digit(row_or_column, variable_index, domain
         # print("remove {} in {}".format(row_or_column[k - 1], k))
         new_domain.remove(row_or_column[k - 1])
         # np.delete(new_domain, np.where(new_domain == row_or_column[k - 1]))
+
+    if len(row_or_column) - 2 >= k >= 1 and row_or_column[k - 1] == row_or_column[k + 1] and (row_or_column[k - 1] == "0" or row_or_column[k - 1] == "1") and row_or_column[k - 1] in new_domain:
+        new_domain.remove(row_or_column[k - 1])
+
     if k <= len(row_or_column) - 3 and row_or_column[k + 1] == row_or_column[k + 2] and (
             row_or_column[k + 1] == "0" or row_or_column[k + 1] == "1") and row_or_column[k + 1] in new_domain:
         # print("remove {} in {}".format(row_or_column[k + 1], k))

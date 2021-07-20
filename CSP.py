@@ -52,7 +52,7 @@ def CSP_Backtracking(node, const_prop_mode, csp_mode):
 
     if not not_empty:
         # here we should go to parent node
-        print('back to parent')
+        print(" =====> BACKTRACKING <===== ")
         CSP_Backtracking(node.parent, const_prop_mode, 'continue')
     else:
         print("***** After MRV *****")
@@ -70,6 +70,8 @@ def CSP_Backtracking(node, const_prop_mode, csp_mode):
             # for i in new_variables_domain:
             #     print(i)
             flag, variables_domain = Propagation.forward_checking(new_variables_domain)
+
+            # print("after FC flag is ", flag)
             # print("var domains node after forward: \n")
             # for i in variables_domain:
             #     print(i)

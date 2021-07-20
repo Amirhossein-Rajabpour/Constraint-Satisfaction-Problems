@@ -13,7 +13,7 @@ def take_board(filename):
 
 
 if __name__ == "__main__":
-    file_name = './puzzles/puzzle0.txt'
+    file_name = './puzzles/puzzle1.txt'
     board = take_board(file_name)
 
     starting_time = time.time()
@@ -21,4 +21,5 @@ if __name__ == "__main__":
     CSP.start_CSP(board, const_prop_mode)
     ending_time = time.time()
     duration = ending_time - starting_time
+    print("\n\nTime analysis")
     print(f'for constraint propagation {const_prop_mode} took {duration} secs long')
