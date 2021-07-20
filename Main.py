@@ -1,4 +1,5 @@
 import CSP
+import time
 
 
 def take_board(filename):
@@ -15,5 +16,9 @@ if __name__ == "__main__":
     file_name = './puzzles/puzzle2.txt'
     board = take_board(file_name)
 
+    starting_time = time.time()
     const_prop_mode = "forward_checking"
     CSP.start_CSP(board, const_prop_mode)
+    ending_time = time.time()
+    duration = ending_time - starting_time
+    print(f'for constraint propagation {const_prop_mode} took {duration} secs long')
