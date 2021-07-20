@@ -9,9 +9,10 @@ def forward_checking(variables_domain):
     # variables_domain = node.variables_domain
     flag = True
     variables_domain_copy = copy.deepcopy(variables_domain)
-    print("ghable forwardddd")
-    print(variables_domain_copy)
-    print("-----------------------------")
+    # print("ghable forwardddd")
+    # print("var domains")
+    # print(variables_domain_copy)
+    # print("-----------------------------")
 
     for i in range(len(variables_domain_copy)):
         for j in range(len(variables_domain_copy)):

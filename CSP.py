@@ -5,12 +5,11 @@ import copy
 import GameRule
 import sys
 
-sys.setrecursionlimit(10 ** 6)
+# sys.setrecursionlimit(10 ** 6)
 
 
-def print_board(node):
-    print(f'value {node.assigned_value} assigned to index {node.assigned_variable}\n')
-    for i in node.board:
+def print_board(board):
+    for i in board:
         print(i)
     print('*******************************************')
 
@@ -33,14 +32,12 @@ def create_domains_list(initial_board):
 
 # it takes raw input and create basic structures for the program
 def start_CSP(input_board, const_prop_mode):
-
     domains_list = create_domains_list(input_board)
     initial_node = Node.Node(input_board, '', domains_list, '', '')  # initial node does not have parent
     CSP_Backtracking(initial_node, const_prop_mode, 'start')
 
 
 def CSP_Backtracking(node, const_prop_mode, csp_mode):
-
     is_finished = GameRule.check_all_rule_game(node)
     if is_finished:
         print('finish')
@@ -49,22 +46,32 @@ def CSP_Backtracking(node, const_prop_mode, csp_mode):
 
     print('new step: *********************************')
     print('before MRV')
-    for i in node.board:
-        print(i)
-    not_empty, node = Heuristic.MRV(node, csp_mode)
-    print_board(node)
+    print_board(node.board)
+
+    not_empty = Heuristic.MRV(node, csp_mode)
+
     if not not_empty:
         # here we should go to parent node
         print('back to parent')
         CSP_Backtracking(node.parent, const_prop_mode, 'continue')
     else:
+        print("after MRV")
+        new_variables_domain = copy.deepcopy(node.variables_domain)
+        x, y = node.assigned_variable
+        new_variables_domain[x][y] = node.assigned_value
+        new_board = copy.deepcopy(node.board)
+        new_board[x][y] = node.assigned_value
+        print("variable {} = {}".format(node.assigned_variable, node.assigned_value))
+        print_board(new_board)
+
         if const_prop_mode == 'forward_checking':
-            variables_domain_copy = copy.deepcopy(node.variables_domain)
-            print('var domains:\n')
-            for i in variables_domain_copy:
+            print('var domains node ghable forward:\n')
+            for i in new_variables_domain:
                 print(i)
-            variables_domain_copy[node.assigned_variable[0]][node.assigned_variable[1]] = node.assigned_value
-            flag, variables_domain = Propagation.forward_checking(variables_domain_copy)
+            flag, variables_domain = Propagation.forward_checking(new_variables_domain)
+            print("var domains node after forward: \n")
+            for i in variables_domain:
+                print(i)
             # print('after FC: ', node.variables_domain)
         elif const_prop_mode == 'MAC':
             flag, variables_domain = Propagation.MAC(node)
@@ -72,13 +79,16 @@ def CSP_Backtracking(node, const_prop_mode, csp_mode):
         if flag:
             # continue solving the puzzle
             print('continue')
-            board_copy = copy.deepcopy(node.board)
-            child_node = Node.Node(board_copy, node, variables_domain, '', '')
+
+            child_node = Node.Node(new_board, node, variables_domain, '', '')
             CSP_Backtracking(child_node, const_prop_mode, 'continue')
-        elif not flag and len(node.variables_domain[node.assigned_variable[0]][node.assigned_variable[1]]) == 0:
+        elif not flag and len(node.variables_domain[x][y]) == 0:
             # backtracking
             print('domain is empty. we should backtrack')
+            print("node parent variables")
+            print(node.parent.variables_domain)
             CSP_Backtracking(node.parent, const_prop_mode, 'backtracking')
+
         else:
             # new values for assigned_variable should be considered
             print('change last variable value')
