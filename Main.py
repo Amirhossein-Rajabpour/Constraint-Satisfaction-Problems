@@ -13,7 +13,7 @@ def take_board(filename):
 
 
 if __name__ == "__main__":
-    file_name = './puzzles/puzzle1.txt'
+    file_name = './puzzles/puzzle2.txt'
     board = take_board(file_name)
 
     starting_time = time.time()
