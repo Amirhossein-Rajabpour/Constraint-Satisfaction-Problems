@@ -251,3 +251,4 @@ def check_variables_domains_with_rule_game(variables_domain, variable_index):
     variables_domain_copy[x][y] = new_domain
 
     return True, variables_domain_copy
+
