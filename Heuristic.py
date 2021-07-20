@@ -2,13 +2,18 @@ import copy
 
 
 def find_minimum_domain(node):
+    print("node variables ")
+    for row in node.variables_domain:
+        print(row)
     minimum = 2
     minimum_index = ()
     dimension = len(node.board)
     for i in range(dimension):
         for j in range(dimension):
             if node.board[i][j] == '-' and len(node.variables_domain[i][j]) <= minimum:
+                minimum = len(node.variables_domain[i][j])
                 minimum_index = (i, j)
+    print("MRV => index ", minimum_index)
     return minimum_index
 
 

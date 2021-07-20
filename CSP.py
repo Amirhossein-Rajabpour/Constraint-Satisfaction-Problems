@@ -40,8 +40,8 @@ def start_CSP(input_board, const_prop_mode):
 def CSP_Backtracking(node, const_prop_mode, csp_mode):
     is_finished = GameRule.check_all_rule_game(node)
     if is_finished:
-        print('finish')
-        print_board(node)
+        print('******** solved puzzle ********')
+        print_board(node.board)
         return
 
     print('new step: *********************************')

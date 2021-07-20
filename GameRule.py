@@ -23,7 +23,7 @@ def is_equal_numbers_of_digit_in_board(node):
 
     # check columns
     for i in range(len(board)):
-        column = board[:][i]
+        column = get_column_from_array(board, i)
         if column.count("0") != column.count("1") or column.count('-') >= 1:
             return False
 
@@ -60,7 +60,7 @@ def are_unique_strings_in_board(node):
 
     # take out all created strings in columns
     for i in range(len(board)):
-        column = board[:][i]
+        column = get_column_from_array(board, i)
         created_string = created_string_with_char(column)
         created_string_in_columns.append(created_string)
 
@@ -121,7 +121,7 @@ def check_duplicate_digit_in_board(node):
 
     # check columns
     for i in range(len(board)):
-        column = board[:][i]
+        column = get_column_from_array(board, i)
         if not check_duplicate_digit(column):
             return False
 
@@ -153,7 +153,7 @@ def check_variables_domain_with_rule1(variables_domain, variable_index):
     x, y = variable_index[0], variable_index[1]
 
     row = variables_domain[x][:]
-    column = variables_domain[:][y]
+    column = get_column_from_array(variables_domain, y)
     new_domain = variables_domain[x][y]
 
     # check row
@@ -208,13 +208,14 @@ def check_variables_domain_duplicate_digit(row_or_column, variable_index, domain
 def check_variables_domain_with_rule3(variables_domain, variable_index):
     x, y = variable_index[0], variable_index[1]
     domain = variables_domain[x][y]
+    print("first domain ", domain)
 
     # check in row
-    row = variables_domain[x][:]
+    row = variables_domain[x]
     new_domain = check_variables_domain_duplicate_digit(row, y, domain)
 
     # check in column
-    column = variables_domain[:][y]
+    column = get_column_from_array(variables_domain, y)
     new_domain = check_variables_domain_duplicate_digit(column, x, new_domain)
 
     return new_domain
@@ -225,7 +226,9 @@ def check_variables_domains_with_rule_game(variables_domain, variable_index):
     x, y = variable_index
 
     # check rule 1
+    print("before check rule 1 ", variables_domain_copy[x][y])
     flag, new_domain = check_variables_domain_with_rule1(variables_domain_copy, variable_index)
+    print("after check rule 1 ", new_domain)
     if not flag:
         print("rule 1 bega rft")
         return False, []
@@ -238,7 +241,13 @@ def check_variables_domains_with_rule_game(variables_domain, variable_index):
         return False, []
 
     # check rule 3
+    print("before rule3")
+    for row in variables_domain_copy:
+        print(row)
+    print(variable_index)
+    print(variables_domain_copy[x][y])
     new_domain = check_variables_domain_with_rule3(variables_domain_copy, variable_index)
+    print(new_domain)
     if len(new_domain) == 0:
         print("rule 3 bega rft")
         return False, []
