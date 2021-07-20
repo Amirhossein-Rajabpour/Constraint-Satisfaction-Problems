@@ -38,13 +38,13 @@ def MRV(node, mode):
     node.assigned_value = assign_value(node)
     x, y = node.assigned_variable
     node.board[x][y] = node.assigned_value
-    if node.assigned_value == "0":
-        node.variables_domain[x][y] = ["1"]
-    elif node.assigned_value == "1":
-        node.variables_domain[x][y] == ["0"]
-    else:
-        print('backtracking')
-        node.variables_domain[x][y] == []
+    # if node.assigned_value == "0":
+    #     node.variables_domain[x][y] = ["1"]
+    # elif node.assigned_value == "1":
+    #     node.variables_domain[x][y] == ["0"]
+    # else:
+    #     print('backtracking')
+    #     node.variables_domain[x][y] == []
 
     # return changed node
     if node.assigned_value != '-':

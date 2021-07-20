@@ -47,6 +47,7 @@ def CSP_Backtracking(node, const_prop_mode, csp_mode):
         print_board(node)
         return
 
+    print('new step: *********************************')
     print('before MRV')
     for i in node.board:
         print(i)
@@ -59,9 +60,12 @@ def CSP_Backtracking(node, const_prop_mode, csp_mode):
     else:
         if const_prop_mode == 'forward_checking':
             variables_domain_copy = copy.deepcopy(node.variables_domain)
+            print('var domains:\n')
+            for i in variables_domain_copy:
+                print(i)
             variables_domain_copy[node.assigned_variable[0]][node.assigned_variable[1]] = node.assigned_value
             flag, variables_domain = Propagation.forward_checking(variables_domain_copy)
-            print('after FC: ', node.variables_domain)
+            # print('after FC: ', node.variables_domain)
         elif const_prop_mode == 'MAC':
             flag, variables_domain = Propagation.MAC(node)
 
