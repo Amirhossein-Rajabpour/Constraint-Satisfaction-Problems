@@ -63,10 +63,24 @@ def add_neighbors_to_queue(variables_domain, changed_variable, queue):
         if not is_changed_domain and not new_variables_domain:
             return False, []  # backtracking
 
+    if x >= 2 and variables_domain[x - 2][y] != "0" and variables_domain[x - 2][y] != "1":
+        is_changed_domain, new_variables_domain = is_change_domain(variables_domain, (x - 2, y))
+        if is_changed_domain:
+            queue.append((x - 2, y))
+        if not is_changed_domain and not new_variables_domain:
+            return False, []  # backtracking
+
     if x <= len(variables_domain) - 2 and variables_domain[x + 1][y] != "0" and variables_domain[x + 1][y] != "1":
         is_changed_domain, new_variables_domain = is_change_domain(new_variables_domain, (x + 1, y))
         if is_changed_domain:
             queue.append((x + 1, y))
+        if not is_changed_domain and not new_variables_domain:
+            return False, []  # backtracking
+
+    if x <= len(variables_domain) - 3 and variables_domain[x + 2][y] != "0" and variables_domain[x + 2][y] != "1":
+        is_changed_domain, new_variables_domain = is_change_domain(new_variables_domain, (x + 2, y))
+        if is_changed_domain:
+            queue.append((x + 2, y))
         if not is_changed_domain and not new_variables_domain:
             return False, []  # backtracking
 
@@ -77,10 +91,24 @@ def add_neighbors_to_queue(variables_domain, changed_variable, queue):
         if not is_changed_domain and not new_variables_domain:
             return False, []
 
+    if y >= 2 and variables_domain[x][y - 2] != "0" and variables_domain[x][y - 2] != "1":
+        is_changed_domain, new_variables_domain = is_change_domain(new_variables_domain, (x, y - 2))
+        if is_changed_domain:
+            queue.append((x, y - 2))
+        if not is_changed_domain and not new_variables_domain:
+            return False, []
+
     if y <= len(variables_domain) - 2 and variables_domain[x][y + 1] != "0" and variables_domain[x][y + 1] != "1":
         is_changed_domain, new_variables_domain = is_change_domain(new_variables_domain, (x, y + 1))
         if is_changed_domain:
             queue.append((x, y + 1))
+        if not is_changed_domain and not new_variables_domain:
+            return False, []
+
+    if y <= len(variables_domain) - 3 and variables_domain[x][y + 2] != "0" and variables_domain[x][y + 2] != "1":
+        is_changed_domain, new_variables_domain = is_change_domain(new_variables_domain, (x, y + 2))
+        if is_changed_domain:
+            queue.append((x, y + 2))
         if not is_changed_domain and not new_variables_domain:
             return False, []
 
