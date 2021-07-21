@@ -3,10 +3,9 @@ import Propagation
 from Node import *
 import copy
 from GameRule import *
+
 import sys
-
-
-# sys.setrecursionlimit(10 ** 6)
+sys.setrecursionlimit(10 ** 9)
 
 
 def print_board(board):
