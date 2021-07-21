@@ -5,6 +5,7 @@ import copy
 import GameRule
 import sys
 
+
 # sys.setrecursionlimit(10 ** 6)
 
 
@@ -30,14 +31,30 @@ def create_domains_list(initial_board):
     return domains_list
 
 
+# check puzzle when is backtracking to base_node, return False (puzzle is unsolvable)
+def is_solvable(node):
+    if node.board == "":
+        print(" ====> This puzzle is unsolvable <====")
+        return False
+
+    return True
+
+
 # it takes raw input and create basic structures for the program
 def start_CSP(input_board, const_prop_mode):
+
+    # we start from base_node (base_node is parent of initial_node)
+    base_node = Node.Node("", "", "", "", "")
     domains_list = create_domains_list(input_board)
-    initial_node = Node.Node(input_board, '', domains_list, '', '')  # initial node does not have parent
+    initial_node = Node.Node(input_board, base_node, domains_list, '', '')  # initial node have parent => base_node
     CSP_Backtracking(initial_node, const_prop_mode, 'start')
 
 
 def CSP_Backtracking(node, const_prop_mode, csp_mode):
+    # check we
+    if not is_solvable(node):
+        return
+
     is_finished = GameRule.check_all_rule_game(node)
     if is_finished:
         print('\n\n*************************** SOLVED PUZZLE *************************\n')
